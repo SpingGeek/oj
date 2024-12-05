@@ -1,9 +1,9 @@
-package generator.service.impl;
+package com.spring.onlinejudge.service.impl;
 
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import generator.domain.QuestionSubmit;
-import generator.service.QuestionSubmitService;
-import generator.mapper.QuestionSubmitMapper;
+import com.spring.onlinejudge.mapper.QuestionSubmitMapper;
+import com.spring.onlinejudge.model.entity.QuestionSubmit;
+import com.spring.onlinejudge.service.QuestionSubmitService;
 import org.springframework.stereotype.Service;
 
 /**
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 */
 @Service
 public class QuestionSubmitServiceImpl extends ServiceImpl<QuestionSubmitMapper, QuestionSubmit>
-    implements QuestionSubmitService{
+    implements QuestionSubmitService {
 
 }
 

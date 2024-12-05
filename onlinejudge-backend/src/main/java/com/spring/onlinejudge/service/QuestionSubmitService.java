@@ -1,7 +1,8 @@
-package generator.service;
+package com.spring.onlinejudge.service;
 
-import generator.domain.QuestionSubmit;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.spring.onlinejudge.model.entity.QuestionSubmit;
+
 
 /**
 * @author spring

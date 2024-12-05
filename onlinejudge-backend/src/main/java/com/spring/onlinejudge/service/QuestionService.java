@@ -1,7 +1,7 @@
-package generator.service;
+package com.spring.onlinejudge.service;
 
-import generator.domain.Question;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.spring.onlinejudge.model.entity.Question;
 
 /**
 * @author spring

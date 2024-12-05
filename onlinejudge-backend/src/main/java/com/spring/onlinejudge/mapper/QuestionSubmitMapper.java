@@ -1,7 +1,8 @@
-package generator.mapper;
+package com.spring.onlinejudge.mapper;
 
-import generator.domain.QuestionSubmit;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.spring.onlinejudge.model.entity.QuestionSubmit;
+
 
 /**
 * @author spring
