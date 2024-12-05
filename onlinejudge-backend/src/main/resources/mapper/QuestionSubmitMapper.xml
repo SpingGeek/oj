@@ -2,15 +2,15 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="generator.mapper.PostMapper">
+<mapper namespace="generator.mapper.QuestionSubmitMapper">
 
-    <resultMap id="BaseResultMap" type="generator.domain.Post">
+    <resultMap id="BaseResultMap" type="generator.domain.QuestionSubmit">
             <id property="id" column="id" jdbcType="BIGINT"/>
-            <result property="title" column="title" jdbcType="VARCHAR"/>
-            <result property="content" column="content" jdbcType="VARCHAR"/>
-            <result property="tags" column="tags" jdbcType="VARCHAR"/>
-            <result property="thumbNum" column="thumbNum" jdbcType="INTEGER"/>
-            <result property="favourNum" column="favourNum" jdbcType="INTEGER"/>
+            <result property="language" column="language" jdbcType="VARCHAR"/>
+            <result property="code" column="code" jdbcType="VARCHAR"/>
+            <result property="judgeInfo" column="judgeInfo" jdbcType="VARCHAR"/>
+            <result property="status" column="status" jdbcType="INTEGER"/>
+            <result property="questionId" column="questionId" jdbcType="BIGINT"/>
             <result property="userId" column="userId" jdbcType="BIGINT"/>
             <result property="createTime" column="createTime" jdbcType="TIMESTAMP"/>
             <result property="updateTime" column="updateTime" jdbcType="TIMESTAMP"/>
@@ -18,8 +18,8 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,title,content,
-        tags,thumbNum,favourNum,
+        id,language,code,
+        judgeInfo,status,questionId,
         userId,createTime,updateTime,
         isDelete
     </sql>
