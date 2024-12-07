@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 微信公众号相关接口
+ *
  * @author spring
  */
 @RestController
@@ -89,9 +90,6 @@ public class WxMpController {
 
     /**
      * 设置公众号菜单
-     *
-     * @return
-     * @throws WxErrorException
      */
     @GetMapping("/setMenu")
     public String setMenu() throws WxErrorException {

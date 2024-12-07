@@ -3,6 +3,7 @@ package com.spring.onlinejudge.model.entity;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
@@ -10,16 +11,17 @@ import lombok.Data;
 
 /**
  * 题目
+ *
  * @author spring
  * @TableName question
  */
-@TableName(value ="question")
+@TableName(value = "question")
 @Data
 public class Question implements Serializable {
     /**
      * id
      */
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.ASSIGN_ID)
     private Long id;
 
     /**
@@ -90,6 +92,7 @@ public class Question implements Serializable {
     /**
      * 是否删除
      */
+    @TableLogic
     private Integer isDelete;
 
     @TableField(exist = false)

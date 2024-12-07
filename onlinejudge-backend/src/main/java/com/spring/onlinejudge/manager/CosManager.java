@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * Cos 对象存储操作
+ *
  * @author spring
  */
 @Component
@@ -23,10 +24,6 @@ public class CosManager {
 
     /**
      * 上传对象
-     *
-     * @param key 唯一键
-     * @param localFilePath 本地文件路径
-     * @return
      */
     public PutObjectResult putObject(String key, String localFilePath) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(cosClientConfig.getBucket(), key,
@@ -36,10 +33,6 @@ public class CosManager {
 
     /**
      * 上传对象
-     *
-     * @param key 唯一键
-     * @param file 文件
-     * @return
      */
     public PutObjectResult putObject(String key, File file) {
         PutObjectRequest putObjectRequest = new PutObjectRequest(cosClientConfig.getBucket(), key,

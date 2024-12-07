@@ -25,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 文件接口
+ *
  * @author spring
  */
 @RestController
@@ -40,15 +41,10 @@ public class FileController {
 
     /**
      * 文件上传
-     *
-     * @param multipartFile
-     * @param uploadFileRequest
-     * @param request
-     * @return
      */
     @PostMapping("/upload")
     public BaseResponse<String> uploadFile(@RequestPart("file") MultipartFile multipartFile,
-            UploadFileRequest uploadFileRequest, HttpServletRequest request) {
+                                           UploadFileRequest uploadFileRequest, HttpServletRequest request) {
         String biz = uploadFileRequest.getBiz();
         FileUploadBizEnum fileUploadBizEnum = FileUploadBizEnum.getEnumByValue(biz);
         if (fileUploadBizEnum == null) {
@@ -84,9 +80,6 @@ public class FileController {
 
     /**
      * 校验文件
-     *
-     * @param multipartFile
-     * @param fileUploadBizEnum 业务类型
      */
     private void validFile(MultipartFile multipartFile, FileUploadBizEnum fileUploadBizEnum) {
         // 文件大小
