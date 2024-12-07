@@ -4,6 +4,7 @@ import static com.spring.onlinejudge.constant.UserConstant.USER_LOGIN_STATE;
 
 import cn.hutool.core.collection.CollUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.spring.onlinejudge.common.ErrorCode;
 import com.spring.onlinejudge.constant.CommonConstant;
@@ -39,7 +40,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     /**
      * 盐值，混淆密码
      */
-    public static final String SALT = "spring";
+    private static final String SALT = "spring";
 
     @Override
     public long userRegister(String userAccount, String userPassword, String checkPassword) {
@@ -238,7 +239,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
 
     @Override
     public List<UserVO> getUserVO(List<User> userList) {
-        if (CollUtil.isEmpty(userList)) {
+        if (CollectionUtils.isEmpty(userList)) {
             return new ArrayList<>();
         }
         return userList.stream().map(this::getUserVO).collect(Collectors.toList());

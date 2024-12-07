@@ -6,6 +6,7 @@ import com.spring.onlinejudge.exception.BusinessException;
 import com.spring.onlinejudge.model.entity.User;
 import com.spring.onlinejudge.model.enums.UserRoleEnum;
 import com.spring.onlinejudge.service.UserService;
+import org.apache.commons.lang3.StringUtils;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  * 权限校验 AOP
+ *
  * @author spring
  */
 @Aspect
@@ -38,25 +40,22 @@ public class AuthInterceptor {
         HttpServletRequest request = ((ServletRequestAttributes) requestAttributes).getRequest();
         // 当前登录用户
         User loginUser = userService.getLoginUser(request);
-        UserRoleEnum mustRoleEnum = UserRoleEnum.getEnumByValue(mustRole);
-        // 不需要权限，放行
-        if (mustRoleEnum == null) {
-            return joinPoint.proceed();
-        }
         // 必须有该权限才通过
-        UserRoleEnum userRoleEnum = UserRoleEnum.getEnumByValue(loginUser.getUserRole());
-        if (userRoleEnum == null) {
-            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
-        }
-        // 如果被封号，直接拒绝
-        if (UserRoleEnum.BAN.equals(userRoleEnum)) {
-            throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
-        }
-        // 必须有管理员权限
-        if (UserRoleEnum.ADMIN.equals(mustRoleEnum)) {
-            // 用户没有管理员权限，拒绝
-            if (!UserRoleEnum.ADMIN.equals(userRoleEnum)) {
+        if (StringUtils.isNotBlank(mustRole)) {
+            UserRoleEnum mustUserRoleEnum = UserRoleEnum.getEnumByValue(mustRole);
+            if (mustUserRoleEnum == null) {
                 throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+            }
+            String userRole = loginUser.getUserRole();
+            // 如果被封号，直接拒绝
+            if (UserRoleEnum.BAN.equals(mustUserRoleEnum)) {
+                throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+            }
+            // 必须有管理员权限
+            if (UserRoleEnum.ADMIN.equals(mustUserRoleEnum)) {
+                if (!mustRole.equals(userRole)) {
+                    throw new BusinessException(ErrorCode.NO_AUTH_ERROR);
+                }
             }
         }
         // 通过权限校验，放行

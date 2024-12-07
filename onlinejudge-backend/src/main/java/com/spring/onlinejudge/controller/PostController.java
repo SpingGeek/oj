@@ -1,7 +1,7 @@
 package com.spring.onlinejudge.controller;
 
-import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.google.gson.Gson;
 import com.spring.onlinejudge.annotation.AuthCheck;
 import com.spring.onlinejudge.common.BaseResponse;
 import com.spring.onlinejudge.common.DeleteRequest;
@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 /**
  * 帖子接口
+ *
  * @author spring
  */
 @RestController
@@ -44,6 +45,8 @@ public class PostController {
 
     @Resource
     private UserService userService;
+
+    private final static Gson GSON = new Gson();
 
     // region 增删改查
 
@@ -59,7 +62,7 @@ public class PostController {
         BeanUtils.copyProperties(postAddRequest, post);
         List<String> tags = postAddRequest.getTags();
         if (tags != null) {
-            post.setTags(JSONUtil.toJsonStr(tags));
+            post.setTags(GSON.toJson(tags));
         }
         postService.validPost(post, true);
         User loginUser = userService.getLoginUser(request);
@@ -106,7 +109,7 @@ public class PostController {
         BeanUtils.copyProperties(postUpdateRequest, post);
         List<String> tags = postUpdateRequest.getTags();
         if (tags != null) {
-            post.setTags(JSONUtil.toJsonStr(tags));
+            post.setTags(GSON.toJson(tags));
         }
         // 参数校验
         postService.validPost(post, false);
@@ -134,24 +137,11 @@ public class PostController {
     }
 
     /**
-     * 分页获取列表（仅管理员）
-     */
-    @PostMapping("/list/page")
-    @AuthCheck(mustRole = UserConstant.ADMIN_ROLE)
-    public BaseResponse<Page<Post>> listPostByPage(@RequestBody PostQueryRequest postQueryRequest) {
-        long current = postQueryRequest.getCurrent();
-        long size = postQueryRequest.getPageSize();
-        Page<Post> postPage = postService.page(new Page<>(current, size),
-                postService.getQueryWrapper(postQueryRequest));
-        return ResultUtils.success(postPage);
-    }
-
-    /**
      * 分页获取列表（封装类）
      */
     @PostMapping("/list/page/vo")
     public BaseResponse<Page<PostVO>> listPostVOByPage(@RequestBody PostQueryRequest postQueryRequest,
-            HttpServletRequest request) {
+                                                       HttpServletRequest request) {
         long current = postQueryRequest.getCurrent();
         long size = postQueryRequest.getPageSize();
         // 限制爬虫
@@ -166,7 +156,7 @@ public class PostController {
      */
     @PostMapping("/my/list/page/vo")
     public BaseResponse<Page<PostVO>> listMyPostVOByPage(@RequestBody PostQueryRequest postQueryRequest,
-            HttpServletRequest request) {
+                                                         HttpServletRequest request) {
         if (postQueryRequest == null) {
             throw new BusinessException(ErrorCode.PARAMS_ERROR);
         }
@@ -188,7 +178,7 @@ public class PostController {
      */
     @PostMapping("/search/page/vo")
     public BaseResponse<Page<PostVO>> searchPostVOByPage(@RequestBody PostQueryRequest postQueryRequest,
-            HttpServletRequest request) {
+                                                         HttpServletRequest request) {
         long size = postQueryRequest.getPageSize();
         // 限制爬虫
         ThrowUtils.throwIf(size > 20, ErrorCode.PARAMS_ERROR);
@@ -208,7 +198,7 @@ public class PostController {
         BeanUtils.copyProperties(postEditRequest, post);
         List<String> tags = postEditRequest.getTags();
         if (tags != null) {
-            post.setTags(JSONUtil.toJsonStr(tags));
+            post.setTags(GSON.toJson(tags));
         }
         // 参数校验
         postService.validPost(post, false);
